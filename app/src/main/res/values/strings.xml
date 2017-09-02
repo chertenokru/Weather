@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Weather</string>
+    <string name="welcome">[ Welcome ! ]</string>
+    <string name="select_city">Select City:</string>
+    <string name="data_source">Select source data:</string>
+    <string-array name="city">
+        <item>Moscow</item>
+        <item>Piter</item>
+        <item>Omsk</item>
+    </string-array>
+    >
+    <string-array name="city_value">
+        <item>+5</item>
+        <item>-6</item>
+        <item>-30</item>
+    </string-array>
+    >
+    <string name="resourceDate">App resource</string>
+    <string name="yandex">Yandex</string>
+    <string name="weather_text">Weather forecast</string>
+    <string name="not_found">No info</string>
+    <string name="get_weather">Get weather forecast</string>
+    <string name="last_request">Last request: </string>
+    <string name="share">Share</string>
+    <string name="_return">Back</string>
+    <string name="error_send">No activity to send</string>
+</resources>

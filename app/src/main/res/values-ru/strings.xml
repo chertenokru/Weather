@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Погода</string>
+    <string name="welcome">[ Велком ! ]</string>
+    <string name="select_city">Выберите город:</string>
+    <string name="data_source">Выберите источник данных:</string>
+    <string-array name="city">
+        <item>Москва</item>
+        <item>Питер</item>
+        <item>Омск</item>
+        </string-array>>
+    <string-array name="city_value">
+        <item>+5</item>
+        <item>-6</item>
+        <item>-30</item>
+    </string-array>>
+    <string name="resourceDate">Ресурсы приложения</string>
+    <string name="yandex">Yandex</string>
+    <string name="weather_text">Прогноз погоды</string>
+    <string name="not_found">Нет информации</string>
+    <string name="get_weather">Получить прогноз погоды</string>
+    <string name="last_request">Последний запрос:</string>
+    <string name="share">Поделиться</string>
+    <string name="_return">Вернуться</string>
+    <string name="error_send">Нету активностей для выполнения этого действия</string>
+</resources>
