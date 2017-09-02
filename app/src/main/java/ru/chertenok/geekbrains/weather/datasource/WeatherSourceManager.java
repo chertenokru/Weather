@@ -8,7 +8,7 @@ import ru.chertenok.geekbrains.weather.IWeather;
  * Created by 13th on 01-Sep-17.
  */
 
-public class WeatherSourceManager {
+public  class WeatherSourceManager {
     public enum WeatherDateSourceType{PropertyData,YandexData};
 
     private static IWeather iWeather = null;
@@ -20,6 +20,8 @@ public class WeatherSourceManager {
         else return getWeatherObj(WeatherDateSourceType.PropertyData,context);
     }
 
+    private WeatherSourceManager() {
+    }
 
     public static IWeather getWeatherObj(WeatherDateSourceType weatherDateSource, Context context) {
         if (iWeather != null && weatherDateSource == WeatherSourceManager.weatherDateSourceType)  return iWeather;
