@@ -2,17 +2,16 @@ package ru.chertenok.geekbrains.weather;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import ru.chertenok.geekbrains.weather.datasource.ResourceData;
 import ru.chertenok.geekbrains.weather.datasource.WeatherSourceManager;
 
 
@@ -24,22 +23,27 @@ public class MainActivity extends AppCompatActivity implements IonFinishLoad{
     SharedPreferences pref;
     final String SETTING_NAME = "setting";
     final String LAST_CITY_ATTR_NAME = "last_city";
+    TextView textView;
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data != null)
         {
-            TextView textView = (TextView) findViewById(R.id.view_last);
-            textView.setText(getString(R.string.last_request) + data.getExtras().getString(WeatherDetail.RESULT_PARAM_STRING));
+                 textView.setText(getString(R.string.last_request) + data.getExtras().getString(WeatherDetailActivity.RESULT_PARAM_STRING));
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // способ 2 запрета поворота
+        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
+        textView = (TextView) findViewById(R.id.view_last);
         //getResources().getStringArray(R.array.city);
         weather = WeatherSourceManager.getWeatherObj(WeatherSourceManager.WeatherDateSourceType.PropertyData,getApplicationContext());
 
@@ -63,19 +67,22 @@ public class MainActivity extends AppCompatActivity implements IonFinishLoad{
 
             }
         });
+        if (savedInstanceState !=null)
+        {
+            setSpinner(savedInstanceState.getString(WeatherDetailActivity.DETAIL_PARAM_STRING,null));
+            textView.setText(savedInstanceState.getString(WeatherDetailActivity.RESULT_PARAM_STRING));
+        } else
         if (pref.contains(LAST_CITY_ATTR_NAME))
         {
-            String s = pref.getString(LAST_CITY_ATTR_NAME,null);
-            int i = adapterCity.getPosition(s);
-            if (i>-1) spinner.setSelection(i);
+            setSpinner(pref.getString(LAST_CITY_ATTR_NAME,""));
         }
 
         final Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),WeatherDetail.class);
-                intent.putExtra(WeatherDetail.DETAIL_PARAM_STRING,spinner.getSelectedItem().toString());
+                Intent intent = new Intent(getApplicationContext(),WeatherDetailActivity.class);
+                intent.putExtra(WeatherDetailActivity.DETAIL_PARAM_STRING,spinner.getSelectedItem().toString());
                 startActivityForResult(intent,1);
 
             }
@@ -83,7 +90,17 @@ public class MainActivity extends AppCompatActivity implements IonFinishLoad{
 
     }
 
+    private void setSpinner(String text) {
+        int i = adapterCity.getPosition(text);
+        if (i>-1) spinner.setSelection(i);
+    }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString(WeatherDetailActivity.DETAIL_PARAM_STRING,spinner.getSelectedItem().toString());
+        outState.putString(WeatherDetailActivity.RESULT_PARAM_STRING,textView.getText().toString());
+
+    }
 
     @Override
     public void finish(String[] data, Operations operations) {

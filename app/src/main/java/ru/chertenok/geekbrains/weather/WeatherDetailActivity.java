@@ -12,7 +12,7 @@ import android.widget.Toast;
 import ru.chertenok.geekbrains.weather.datasource.WeatherSourceManager;
 
 
-public class WeatherDetail extends AppCompatActivity implements IonFinishLoad {
+public class WeatherDetailActivity extends AppCompatActivity implements IonFinishLoad {
     public final static String DETAIL_PARAM_STRING = "city";
     public final static String RESULT_PARAM_STRING = "last";
     private IWeather weather;
@@ -30,7 +30,16 @@ public class WeatherDetail extends AppCompatActivity implements IonFinishLoad {
             s = intent.getExtras().getString(DETAIL_PARAM_STRING, getString(R.string.not_found));
             weather.getWeatherForCity(s, this);
         } else
+        if (savedInstanceState != null)
+        {
+            s = savedInstanceState.getString(DETAIL_PARAM_STRING, getString(R.string.not_found));
+            textView.setText(savedInstanceState.getString(RESULT_PARAM_STRING,getString(R.string.not_found)));
+
+        }else
             textView.setText(getString(R.string.weather_text) + ": "+getString(R.string.not_found));
+
+
+
 
         Button button_share = (Button) findViewById(R.id.button_share);
         Button button_return = (Button) findViewById(R.id.button_return);
